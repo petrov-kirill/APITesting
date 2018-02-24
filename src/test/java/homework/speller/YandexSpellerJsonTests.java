@@ -147,7 +147,7 @@ public class YandexSpellerJsonTests {
                 .given(YandexSpellerApi.baseRequestConfiguration())
                 .param(TEXT.param, "123Привет")
                 .param(OPTIONS.param, IGNORE_DIGITS.number)
-                .param(LANG.param, EN.text)
+                .param(LANG.param, RU.text)
                 .when()
                 .get()
                 .prettyPeek()
@@ -173,7 +173,7 @@ public class YandexSpellerJsonTests {
     @Test
     public void russianWordStartsWithDigit() {
                 YandexSpellerApi.with()
-                .options("2")
+                .options(String.valueOf(IGNORE_DIGITS.number))
                 .text("1давай давай")
                 .callApi()
                 .then()

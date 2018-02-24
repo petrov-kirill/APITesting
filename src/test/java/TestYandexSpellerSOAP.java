@@ -13,16 +13,16 @@ import static core.YandexSpellerConstants.*;
 public class TestYandexSpellerSOAP {
 
     @Test
-    public void simpleCall(){
-                YandexSpellerSOAP
-                        .with().text(wrongWordEn)
-                        .callSOAP()
-                        .then()
-                        .body(Matchers.stringContainsInOrder(Arrays.asList(wrongWordEn, rightWordEn)));
+    public void simpleCall() {
+        YandexSpellerSOAP
+                .with().text(wrongWordEn)
+                .callSOAP()
+                .then()
+                .body(Matchers.stringContainsInOrder(Arrays.asList(wrongWordEn, rightWordEn)));
     }
 
     @Test
-    public void useRequestBuilderToChangeParams(){
+    public void useRequestBuilderToChangeParams() {
         YandexSpellerSOAP.with()
                 .language(Languages.EN)
                 .text(wrongWordEn)
