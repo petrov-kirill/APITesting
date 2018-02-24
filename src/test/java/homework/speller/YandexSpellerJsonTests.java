@@ -4,6 +4,7 @@ import beans.YandexSpellerAnswer;
 import core.YandexSpellerApi;
 import core.YandexSpellerConstants;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -71,8 +72,9 @@ public class YandexSpellerJsonTests {
     public void wrongEnglishTextWithIgnoredURL() {
         RestAssured
                 .given(YandexSpellerApi.baseRequestConfiguration())
+                .accept(ContentType.JSON)
                 .param(OPTIONS.param, IGNORE_URLS.number)
-                .param(TEXT.param, "Hellouser@mail.com World!")
+                .param(TEXT.param, "Hello user@mail.com World!")
                 .param(LANG.param, EN.text)
                 .when()
                 .get()
@@ -158,8 +160,7 @@ public class YandexSpellerJsonTests {
         RestAssured
                 .given(YandexSpellerApi.baseRequestConfiguration())
                 .param(TEXT.param, "Прывет")
-                .param(OPTIONS.param, FIND_REPEAT_WORDS.number)
-                .param(LANG.param, EN.text)
+                .param(LANG.param, RU.text)
                 .when()
                 .get()
                 .prettyPeek()
@@ -167,5 +168,15 @@ public class YandexSpellerJsonTests {
                 .specification(YandexSpellerApi.successResponse())
                 .assertThat()
                 .body(not(isEmptyString()));
+    }
+
+    @Test
+    public void russianWordStartsWithDigit() {
+                YandexSpellerApi.with()
+                .options("2")
+                .text("1давай давай")
+                .callApi()
+                .then()
+                .specification(YandexSpellerApi.successResponse());
     }
 }
